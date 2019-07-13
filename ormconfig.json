@@ -1,0 +1,16 @@
+{
+    "type": "mysql",
+    "database": "portfolio",
+    "username": "root",
+    "password": "123456789",
+    "port": 3306,
+    "host": "localhost",
+    "entities": [
+        "src/entity/*.*"
+    ],
+    "synchronize": true,
+    "logger": "advanced-console",
+    "logging": "all",
+    "dropSchema": true,
+    "cache": true
+}

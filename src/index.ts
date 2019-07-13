@@ -1,11 +1,13 @@
 import 'reflect-metadata';
-import { ApolloServer } from "apollo-server-express";
+import { ApolloServer } from 'apollo-server-express';
 import Express from 'express';
-import cors from "cors";
-import { createSchema } from "./utils/createSchema";
+import cors from 'cors';
+import { createSchema } from './utils/create-schema';
 import dotenv from 'dotenv';
+import { createConnection } from 'typeorm';
 
 const main = async () => {
+    await createConnection();
 
     dotenv.config();
 
@@ -15,26 +17,25 @@ const main = async () => {
 
     const app = Express();
 
-    app.use(
-        cors({
-            credentials: true,
-            origin: "http://localhost:3000"
-        })
-    );
-
     const corsOptions = {
         origin: process.env.ENDPOINT,
         optionsSuccessStatus: 200
     };
 
+    app.use(
+        cors({
+            credentials: true,
+            origin: 'http://localhost:3000'
+        })
+    );
+
     app.use(cors(corsOptions));
 
     apolloServer.applyMiddleware({ app, cors: false });
 
-
     app.listen(4000, () => {
-        console.log("server started in http://localhost:4000/graphql");
+        console.log('server started in http://localhost:4000/graphql');
     });
-}
+};
 
 main();

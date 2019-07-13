@@ -1,5 +1,5 @@
 import { Resolver, Arg, Query } from "type-graphql";
-import { sendEmail } from '../utils/sendEmail';
+import { sendEmail } from '../utils/send-email';
 
 @Resolver()
 export class ContactResolver {
