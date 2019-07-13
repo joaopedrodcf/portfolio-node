@@ -1,8 +1,15 @@
-import { Experience } from '../entity/experience';
+import { Repository } from 'typeorm';
 import { Arg, Mutation, Query, Resolver, Int } from 'type-graphql';
+import { InjectRepository } from 'typeorm-typedi-extensions';
+import { Experience } from '../entity/experience';
 
 @Resolver()
 export class ExperienceResolver {
+    constructor(
+        @InjectRepository(Experience)
+        private readonly experienceRepository: Repository<Experience>
+    ) {}
+
     @Mutation(() => Experience)
     async createExperience(
         @Arg('image') image: string,
@@ -12,37 +19,28 @@ export class ExperienceResolver {
         @Arg('startDate') startDate: Date,
         @Arg('endDate') endDate: Date
     ) {
-        if (endDate) {
-            return Experience.create({
+        return this.experienceRepository
+            .create({
                 image,
                 title,
                 company,
                 description,
                 startDate,
                 endDate
-            }).save();
-        }
-
-        return Experience.create({
-            image,
-            title,
-            company,
-            description,
-            startDate,
-            endDate
-        }).save();
+            })
+            .save();
     }
 
     @Mutation(() => Boolean)
     async deleteExperience(
         @Arg('experienceId', () => Int) experienceId: number
     ) {
-        await Experience.delete({ id: experienceId });
+        await this.experienceRepository.delete({ id: experienceId });
         return true;
     }
 
     @Query(() => [Experience])
     async experiences() {
-        return Experience.find();
+        return this.experienceRepository.find();
     }
 }

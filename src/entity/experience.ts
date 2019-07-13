@@ -1,7 +1,7 @@
 import { Field, ID, ObjectType } from 'type-graphql';
 import { Column, Entity, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
 
-@ObjectType({ description: 'Object representing project' })
+@ObjectType()
 @Entity()
 export class Experience extends BaseEntity {
     @Field(() => ID)

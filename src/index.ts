@@ -4,7 +4,10 @@ import Express from 'express';
 import cors from 'cors';
 import { createSchema } from './utils/create-schema';
 import dotenv from 'dotenv';
-import { createConnection } from 'typeorm';
+import { createConnection, useContainer } from 'typeorm';
+import { Container } from 'typedi';
+
+useContainer(Container);
 
 const main = async () => {
     await createConnection();

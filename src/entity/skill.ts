@@ -3,20 +3,12 @@ import { Column, Entity, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
 
 @ObjectType()
 @Entity()
-export class Project extends BaseEntity {
+export class Skill extends BaseEntity {
     @Field(() => ID)
     @PrimaryGeneratedColumn()
     id: number;
 
     @Field()
     @Column()
-    image: string;
-
-    @Field()
-    @Column()
-    title: string;
-
-    @Field()
-    @Column()
-    description: string;
+    name: string;
 }
