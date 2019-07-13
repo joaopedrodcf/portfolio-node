@@ -68,6 +68,23 @@ query {
 }
 ```
 
+Mutation to create the experience
+
+```js
+mutation{
+  createExperience(
+    image: "https://res.cloudinary.com/dcrcweea8/image/upload/v1563018808/portfolio/farfetch.png",
+    company: "Farfetch",
+    title: "Frontend Developer",
+    description: "Developing the wishlist and out-of-stock of the website",
+    startDate: "Sat Jul 13 2019 13:02:52 GMT+0100 (Western European Summer Time)",
+    endDate: "Sat Jul 13 2019 13:02:52 GMT+0100 (Western European Summer Time)"
+  ){
+    id
+  }
+}
+```
+
 ## License
 
 [MIT](https://github.com/joaopedrodcf/portfolio-node/blob/master/LICENSE)
