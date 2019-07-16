@@ -11,7 +11,7 @@ export class SkillResolver {
     ) {}
 
     @Mutation(() => Skill)
-    async createExperience(@Arg('name') name: string) {
+    async createSkill(@Arg('name') name: string) {
         return this.skillRepository
             .create({
                 name
@@ -20,13 +20,13 @@ export class SkillResolver {
     }
 
     @Mutation(() => Boolean)
-    async deleteExperience(@Arg('skillId', () => Int) skillId: number) {
+    async deleteskill(@Arg('skillId', () => Int) skillId: number) {
         await this.skillRepository.delete({ id: skillId });
         return true;
     }
 
     @Query(() => [Skill])
-    async experiences() {
+    async skills() {
         return this.skillRepository.find();
     }
 }

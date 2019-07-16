@@ -4,6 +4,7 @@ import { ContactResolver } from '../modules/contact-resolver';
 import { ProjectResolver } from '../modules/project-resolver';
 import { ExperienceResolver } from '../modules/experience-resolver';
 import { Container } from 'typedi';
+import { SkillResolver } from '../modules/skill-resolver';
 
 export const createSchema = () =>
     buildSchema({
@@ -11,7 +12,8 @@ export const createSchema = () =>
             HelloResolver,
             ContactResolver,
             ProjectResolver,
-            ExperienceResolver
+            ExperienceResolver,
+            SkillResolver
         ],
         container: Container
     });

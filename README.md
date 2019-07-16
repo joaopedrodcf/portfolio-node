@@ -85,6 +85,32 @@ mutation{
 }
 ```
 
+Mutation to create the skill
+
+```js
+mutation {
+  createSkill (
+    name: "test"
+  ){
+    id
+  }
+}
+```
+
+Mutation to add a skill to the experience
+
+```js
+mutation{
+  addSkill(skillId: 3, experienceId: 1)
+  {
+    id,
+    skills {
+        id
+    }
+  }
+}
+```
+
 ## License
 
 [MIT](https://github.com/joaopedrodcf/portfolio-node/blob/master/LICENSE)

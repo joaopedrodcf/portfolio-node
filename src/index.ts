@@ -7,32 +7,23 @@ import dotenv from 'dotenv';
 import { createConnection, useContainer } from 'typeorm';
 import { Container } from 'typedi';
 
-useContainer(Container);
+dotenv.config();
 
 const main = async () => {
+    useContainer(Container);
+
     await createConnection();
 
-    dotenv.config();
-
-    const schema = await createSchema();
-
-    const apolloServer = new ApolloServer({ schema });
+    const apolloServer = new ApolloServer({ schema: await createSchema() });
 
     const app = Express();
 
-    const corsOptions = {
-        origin: process.env.ENDPOINT,
-        optionsSuccessStatus: 200
-    };
-
     app.use(
         cors({
-            credentials: true,
-            origin: 'http://localhost:3000'
+            origin: process.env.ENDPOINT,
+            optionsSuccessStatus: 200
         })
     );
-
-    app.use(cors(corsOptions));
 
     apolloServer.applyMiddleware({ app, cors: false });
 
