@@ -15,20 +15,22 @@ export class ProjectResolver {
         @Arg('image') image: string,
         @Arg('title') title: string,
         @Arg('description') description: string
-    ) {
+    ): Promise<Project> {
         return this.pprojectRepository
             .create({ image, title, description })
             .save();
     }
 
     @Mutation(() => Boolean)
-    async deleteProject(@Arg('projectId', () => Int) projectId: number) {
+    async deleteProject(
+        @Arg('projectId', () => Int) projectId: number
+    ): Promise<Boolean> {
         await this.pprojectRepository.delete({ id: projectId });
         return true;
     }
 
     @Query(() => [Project])
-    async projects() {
+    async projects(): Promise<Project[]> {
         return this.pprojectRepository.find();
     }
 }

@@ -35,9 +35,9 @@ Mutation to create a project
 ```js
 mutation {
   createProject(
-    description: "PWA for the Yo-kai Watch games, it contains all yo-kais for Yo-kai Watch, their locations, stats, favoritefoods, skills and evolutions. With a really good user base of 4k this year!",
-    title: "Yokaidex",
-    image:"https://res.cloudinary.com/dcrcweea8/image/upload/v1562620408/portfolio/yokaidex.png"
+    description: "PWA for the Yo-kai Watch games, it contains all yo-kais for Yo-kai Watch, their locations, stats, favoritefoods, skills and evolutions. With a really good user base of 4k this year!"
+    title: "Yokaidex"
+    image: "https://res.cloudinary.com/dcrcweea8/image/upload/v1562620408/portfolio/yokaidex.png"
   ) {
     id
     description
@@ -71,15 +71,15 @@ query {
 Mutation to create the experience
 
 ```js
-mutation{
+mutation {
   createExperience(
-    image: "https://res.cloudinary.com/dcrcweea8/image/upload/v1563018808/portfolio/farfetch.png",
-    company: "Farfetch",
-    title: "Frontend Developer",
-    description: "Developing the wishlist and out-of-stock of the website",
-    startDate: "Sat Jul 13 2019 13:02:52 GMT+0100 (Western European Summer Time)",
+    image: "https://res.cloudinary.com/dcrcweea8/image/upload/v1563018808/portfolio/farfetch.png"
+    company: "Farfetch"
+    title: "Frontend Developer"
+    description: "Developing the wishlist and out-of-stock of the website"
+    startDate: "Sat Jul 13 2019 13:02:52 GMT+0100 (Western European Summer Time)"
     endDate: "Sat Jul 13 2019 13:02:52 GMT+0100 (Western European Summer Time)"
-  ){
+  ) {
     id
   }
 }
@@ -89,9 +89,7 @@ Mutation to create the skill
 
 ```js
 mutation {
-  createSkill (
-    name: "test"
-  ){
+  createSkill(name: "Javascript") {
     id
   }
 }
@@ -100,12 +98,29 @@ mutation {
 Mutation to add a skill to the experience
 
 ```js
-mutation{
-  addSkill(skillId: 3, experienceId: 1)
-  {
-    id,
+mutation {
+  addSkill(skillId: 1, experienceId: 1) {
+    id
     skills {
-        id
+      id
+    }
+  }
+}
+```
+
+Query experiences
+
+```js
+query {
+  experiences {
+    image
+    company
+    title
+    description
+    startDate
+    endDate
+    skills {
+      name
     }
   }
 }

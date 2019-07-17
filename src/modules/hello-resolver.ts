@@ -1,9 +1,9 @@
-import { Resolver, Query } from "type-graphql";
+import { Resolver, Query } from 'type-graphql';
 
 @Resolver()
 export class HelloResolver {
     @Query(() => String)
-    async hello() {
-        return "Hello world";
+    async hello(): Promise<String> {
+        return 'Hello world';
     }
 }

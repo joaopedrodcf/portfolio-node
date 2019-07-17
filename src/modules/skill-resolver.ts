@@ -11,7 +11,7 @@ export class SkillResolver {
     ) {}
 
     @Mutation(() => Skill)
-    async createSkill(@Arg('name') name: string) {
+    async createSkill(@Arg('name') name: string): Promise<Skill> {
         return this.skillRepository
             .create({
                 name
@@ -20,13 +20,15 @@ export class SkillResolver {
     }
 
     @Mutation(() => Boolean)
-    async deleteskill(@Arg('skillId', () => Int) skillId: number) {
+    async deleteskill(
+        @Arg('skillId', () => Int) skillId: number
+    ): Promise<Boolean> {
         await this.skillRepository.delete({ id: skillId });
         return true;
     }
 
     @Query(() => [Skill])
-    async skills() {
+    async skills(): Promise<Skill[]> {
         return this.skillRepository.find();
     }
 }

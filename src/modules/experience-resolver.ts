@@ -11,7 +11,7 @@ export class ExperienceResolver {
         private readonly experienceRepository: Repository<Experience>,
         @InjectRepository(Skill)
         private readonly skillRepository: Repository<Skill>
-    ) { }
+    ) {}
 
     @Mutation(() => Experience)
     async createExperience(
@@ -21,7 +21,7 @@ export class ExperienceResolver {
         @Arg('description') description: string,
         @Arg('startDate') startDate: Date,
         @Arg('endDate') endDate: Date
-    ) {
+    ): Promise<Experience> {
         return this.experienceRepository
             .create({
                 image,
@@ -37,18 +37,18 @@ export class ExperienceResolver {
     @Mutation(() => Boolean)
     async deleteExperience(
         @Arg('experienceId', () => Int) experienceId: number
-    ) {
+    ): Promise<Boolean> {
         await this.experienceRepository.delete({ id: experienceId });
         return true;
     }
 
     @Query(() => [Experience])
-    async experiences() {
+    async experiences(): Promise<Experience[]> {
         return this.experienceRepository.find();
     }
 
     @Query(() => [Skill])
-    async skills() {
+    async skills(): Promise<Experience[]> {
         return this.experienceRepository.find();
     }
 
@@ -56,7 +56,7 @@ export class ExperienceResolver {
     async addSkill(
         @Arg('experienceId', () => Int) experienceId: number,
         @Arg('skillId', () => Int) skillId: number
-    ) {
+    ): Promise<Experience> {
         const experience = await this.experienceRepository.findOne({
             id: experienceId
         });
@@ -74,10 +74,8 @@ export class ExperienceResolver {
             throw new Error('Skill Id already added');
         }
 
-        // add the new recipe rate
         (await experience.skills).push(skill);
 
-        // missing validation if already as the skill
         return await this.experienceRepository.save(experience);
     }
 }
