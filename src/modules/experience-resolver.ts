@@ -78,4 +78,19 @@ export class ExperienceResolver {
 
         return await this.experienceRepository.save(experience);
     }
+
+    @Query(() => [Skill])
+    async getSkills(
+        @Arg('experienceId', () => Int) experienceId: number
+    ): Promise<Skill[]> {
+        const experience = await this.experienceRepository.findOne({
+            id: experienceId
+        });
+
+        if (!experience) {
+            throw new Error('Invalid experience ID');
+        }
+
+        return await experience.skills;
+    }
 }
