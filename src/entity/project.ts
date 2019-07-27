@@ -1,5 +1,13 @@
 import { Field, ID, ObjectType } from 'type-graphql';
-import { Column, Entity, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
+import {
+    Column,
+    Entity,
+    PrimaryGeneratedColumn,
+    BaseEntity,
+    ManyToMany,
+    JoinTable
+} from 'typeorm';
+import { Skill } from './skill';
 
 @ObjectType()
 @Entity()
@@ -19,4 +27,9 @@ export class Project extends BaseEntity {
     @Field()
     @Column()
     description: string;
+
+    @Field(() => [Skill], { nullable: true })
+    @ManyToMany(() => Skill, skill => skill.experiences)
+    @JoinTable()
+    skills: Promise<Skill[]>;
 }

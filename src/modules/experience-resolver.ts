@@ -1,4 +1,4 @@
-import { Repository } from 'typeorm';
+import { Repository, getConnection } from 'typeorm';
 import { Arg, Mutation, Query, Resolver, Int } from 'type-graphql';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 import { Experience } from '../entity/experience';
@@ -47,11 +47,37 @@ export class ExperienceResolver {
         return this.experienceRepository.find();
     }
 
-    @Query(() => [Skill])
-    async skills(): Promise<Experience[]> {
-        return this.experienceRepository.find();
+    // Using RelationQueryBuilder
+    // Faster than with the save
+    // Problem "ER_DUP_ENTRY: Duplicate entry '1-1' for key 'PRIMARY'"
+    // https://github.com/typeorm/typeorm/issues/3459
+    @Mutation(() => Experience)
+    async addSkillRelationQueryBuilder(
+        @Arg('experienceId', () => Int) experienceId: number,
+        @Arg('skillId', () => Int) skillId: number
+    ): Promise<void> {
+        const experience = await this.experienceRepository.findOne({
+            id: experienceId
+        });
+        const skill = await this.skillRepository.findOne({ id: skillId });
+
+        if (!experience) {
+            throw new Error('Invalid experience ID');
+        }
+
+        if (!skill) {
+            throw new Error('Invalid skill ID');
+        }
+
+        await getConnection()
+            .createQueryBuilder()
+            .relation(Experience, 'skills')
+            .of(experience)
+            .add(skill);
     }
 
+    // Alternative to RelationQueryBuilder with bulky save method call
+    // Much worse perfomance
     @Mutation(() => Experience)
     async addSkill(
         @Arg('experienceId', () => Int) experienceId: number,
