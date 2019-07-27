@@ -2,14 +2,14 @@ import 'reflect-metadata';
 import { ApolloServer } from 'apollo-server-express';
 import Express from 'express';
 import cors from 'cors';
-import { createSchema } from './utils/create-schema';
 import dotenv from 'dotenv';
 import { createConnection, useContainer } from 'typeorm';
 import { Container } from 'typedi';
+import { createSchema } from './utils/create-schema';
 
 dotenv.config();
 
-const main = async () => {
+const main = async (): Promise<void> => {
     useContainer(Container);
 
     await createConnection();
@@ -27,7 +27,7 @@ const main = async () => {
 
     apolloServer.applyMiddleware({ app, cors: false });
 
-    app.listen(4000, () => {
+    app.listen(4000, (): void => {
         console.log('server started in http://localhost:4000/graphql');
     });
 };

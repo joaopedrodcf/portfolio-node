@@ -1,1 +1,5 @@
-module.exports = require('prettier-config-joaopedrodcf');
+module.exports = {
+    singleQuote: true,
+    tabWidth: 4,
+    semi: true
+};

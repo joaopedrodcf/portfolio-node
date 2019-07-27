@@ -1,6 +1,10 @@
-import nodemailer from "nodemailer";
+import nodemailer from 'nodemailer';
 
-export async function sendEmail(name: string, email: string, message: string) {
+export async function sendEmail(
+    name: string,
+    email: string,
+    message: string
+): Promise<void> {
     const user = process.env.GMAIL_USER;
     const pass = process.env.GMAIL_PASSWORD;
 

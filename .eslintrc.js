@@ -1,17 +1,27 @@
 module.exports = {
     parser: '@typescript-eslint/parser',
-    plugins: ['@typescript-eslint'],
     extends: [
-        // 'plugin:@typescript-eslint/recommended',
-        'plugin:prettier/recommended',
+        'airbnb',
+        'plugin:@typescript-eslint/recommended',
         'prettier/@typescript-eslint',
+        'plugin:prettier/recommended'
     ],
+    plugins: ['@typescript-eslint'],
     parserOptions: {
         project: './tsconfig.json',
         ecmaVersion: 2018,
-        sourceType: 'module',
+        sourceType: 'module'
     },
     rules: {
         // Special ESLint rules or overrides go here.
+        'import/prefer-default-export': 0,
+        'class-methods-use-this': 0
     },
-}
+    settings: {
+        'import/resolver': {
+            node: {
+                extensions: ['.js', '.jsx', '.ts', '.tsx']
+            }
+        }
+    }
+};
