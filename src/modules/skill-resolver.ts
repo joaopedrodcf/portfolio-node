@@ -5,13 +5,13 @@ import { Skill } from '../entity/skill';
 
 @Resolver()
 export class SkillResolver {
-    constructor(
+    public constructor(
         @InjectRepository(Skill)
         private readonly skillRepository: Repository<Skill>
     ) {}
 
     @Mutation(() => Skill)
-    async createSkill(@Arg('name') name: string): Promise<Skill> {
+    public async createSkill(@Arg('name') name: string): Promise<Skill> {
         return this.skillRepository
             .create({
                 name
@@ -19,16 +19,16 @@ export class SkillResolver {
             .save();
     }
 
-    @Mutation(() => Boolean)
-    async deleteskill(
-        @Arg('skillId', () => Int) skillId: number
-    ): Promise<Boolean> {
-        await this.skillRepository.delete({ id: skillId });
-        return true;
+    @Query(() => [Skill])
+    public async skills(): Promise<Skill[]> {
+        return this.skillRepository.find();
     }
 
-    @Query(() => [Skill])
-    async skills(): Promise<Skill[]> {
-        return this.skillRepository.find();
+    @Mutation(() => Boolean)
+    public async deleteskill(
+        @Arg('skillId', () => Int) skillId: number
+    ): Promise<boolean> {
+        await this.skillRepository.delete({ id: skillId });
+        return true;
     }
 }

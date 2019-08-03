@@ -1,0 +1,42 @@
+mutation {
+  createProject(
+    title: "Yokaidex"
+    description: "PWA wiki with all the information about Yo-kai Watch games",
+    image: "https://res.cloudinary.com/dcrcweea8/image/upload/v1562620408/portfolio/yokaidex.png"
+  ) {
+    id,
+    title
+  }
+}
+
+query {
+  projects{
+    id
+    title
+  }
+}
+
+mutation {
+  deleteProject(projectId: 1)
+}
+
+mutation {
+  addProjectSkill(skillId: 1, projectId: 1) {
+    id
+    title
+    skills {
+      id
+      name
+    }
+  }
+}
+
+query {
+  getProjectSkill(projectId: 1){
+    id
+    name
+  }
+}
+
+
+

@@ -1,0 +1,45 @@
+mutation {
+  createExperience(
+    company: "Farfetch"
+    title: "Frontend Developer"
+    description: "Develop the www.farfetch.com website"
+    image: "https://res.cloudinary.com/dcrcweea8/image/upload/v1563018808/portfolio/farfetch.png"
+    startDate: "Sat Jul 13 2019 13:02:52 GMT+0100 (Western European Summer Time)"
+  ) {
+    id
+    title
+  }
+}
+
+query {
+  experiences{
+    id
+    title
+  }
+}
+
+mutation {
+  deleteExperience(experienceId: 1)
+}
+
+mutation {
+  addExperienceSkill(skillId: 1, experienceId: 1) {
+    id
+    title
+    skills {
+      id
+      name
+    }
+  }
+}
+
+query {
+  getExperienceSkills(experienceId: 1){
+    id
+    name
+  }
+}
+
+
+
+

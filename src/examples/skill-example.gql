@@ -1,0 +1,17 @@
+mutation {
+  createSkill(name: "Javascript") {
+    id
+    name
+  }
+}
+
+query {
+  skills{
+    id
+    name
+  }
+}
+
+mutation {
+  deleteskill(skillId: 1)
+}

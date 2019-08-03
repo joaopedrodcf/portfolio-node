@@ -1,0 +1,27 @@
+query{
+  contact(message: "Hi",email:"joaoferr93@gmail.com",name:"Joao")
+}
+
+query {
+  experiences {
+    id
+    company
+  }
+}
+
+query {
+  getSkills(projectId: 1) {
+    id
+    name
+  }
+}
+
+query {
+  projects{
+    id
+    title
+  }
+}
+
+
+

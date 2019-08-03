@@ -1,12 +1,12 @@
-import { Project } from '../entity/project';
 import { Arg, Mutation, Query, Resolver, Int } from 'type-graphql';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 import { Repository } from 'typeorm';
+import { Project } from '../entity/project';
 import { Skill } from '../entity/skill';
 
 @Resolver()
 export class ProjectResolver {
-    constructor(
+    public constructor(
         @InjectRepository(Project)
         private readonly projectRepository: Repository<Project>,
         @InjectRepository(Skill)
@@ -14,7 +14,7 @@ export class ProjectResolver {
     ) {}
 
     @Mutation(() => Project)
-    async createProject(
+    public async createProject(
         @Arg('image') image: string,
         @Arg('title') title: string,
         @Arg('description') description: string
@@ -25,22 +25,22 @@ export class ProjectResolver {
     }
 
     @Mutation(() => Boolean)
-    async deleteProject(
+    public async deleteProject(
         @Arg('projectId', () => Int) projectId: number
-    ): Promise<Boolean> {
+    ): Promise<boolean> {
         await this.projectRepository.delete({ id: projectId });
         return true;
     }
 
     @Query(() => [Project])
-    async projects(): Promise<Project[]> {
+    public async projects(): Promise<Project[]> {
         return this.projectRepository.find();
     }
 
     // Alternative to RelationQueryBuilder with bulky save method call
     // Much worse perfomance
     @Mutation(() => Project)
-    async addSkill(
+    public async addProjectSkill(
         @Arg('projectId', () => Int) projectId: number,
         @Arg('skillId', () => Int) skillId: number
     ): Promise<Project> {
@@ -63,11 +63,11 @@ export class ProjectResolver {
 
         (await project.skills).push(skill);
 
-        return await this.projectRepository.save(project);
+        return this.projectRepository.save(project);
     }
 
     @Query(() => [Skill])
-    async getSkills(
+    public async getProjectSkill(
         @Arg('projectId', () => Int) projectId: number
     ): Promise<Skill[]> {
         const project = await this.projectRepository.findOne({
@@ -78,6 +78,6 @@ export class ProjectResolver {
             throw new Error('Invalid project ID');
         }
 
-        return await project.skills;
+        return project.skills;
     }
 }

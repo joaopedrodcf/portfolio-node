@@ -6,7 +6,7 @@ import { Skill } from '../entity/skill';
 
 @Resolver()
 export class ExperienceResolver {
-    constructor(
+    public constructor(
         @InjectRepository(Experience)
         private readonly experienceRepository: Repository<Experience>,
         @InjectRepository(Skill)
@@ -14,13 +14,13 @@ export class ExperienceResolver {
     ) {}
 
     @Mutation(() => Experience)
-    async createExperience(
+    public async createExperience(
         @Arg('image') image: string,
         @Arg('title') title: string,
         @Arg('company') company: string,
         @Arg('description') description: string,
         @Arg('startDate') startDate: Date,
-        @Arg('endDate') endDate: Date
+        @Arg('endDate', { nullable: true }) endDate: Date
     ): Promise<Experience> {
         return this.experienceRepository
             .create({
@@ -35,15 +35,15 @@ export class ExperienceResolver {
     }
 
     @Mutation(() => Boolean)
-    async deleteExperience(
+    public async deleteExperience(
         @Arg('experienceId', () => Int) experienceId: number
-    ): Promise<Boolean> {
+    ): Promise<boolean> {
         await this.experienceRepository.delete({ id: experienceId });
         return true;
     }
 
     @Query(() => [Experience])
-    async experiences(): Promise<Experience[]> {
+    public async experiences(): Promise<Experience[]> {
         return this.experienceRepository.find();
     }
 
@@ -52,7 +52,7 @@ export class ExperienceResolver {
     // Problem "ER_DUP_ENTRY: Duplicate entry '1-1' for key 'PRIMARY'"
     // https://github.com/typeorm/typeorm/issues/3459
     @Mutation(() => Experience)
-    async addSkillRelationQueryBuilder(
+    public async addExperienceSkillV2(
         @Arg('experienceId', () => Int) experienceId: number,
         @Arg('skillId', () => Int) skillId: number
     ): Promise<void> {
@@ -79,7 +79,7 @@ export class ExperienceResolver {
     // Alternative to RelationQueryBuilder with bulky save method call
     // Much worse perfomance
     @Mutation(() => Experience)
-    async addSkill(
+    public async addExperienceSkill(
         @Arg('experienceId', () => Int) experienceId: number,
         @Arg('skillId', () => Int) skillId: number
     ): Promise<Experience> {
@@ -102,11 +102,11 @@ export class ExperienceResolver {
 
         (await experience.skills).push(skill);
 
-        return await this.experienceRepository.save(experience);
+        return this.experienceRepository.save(experience);
     }
 
     @Query(() => [Skill])
-    async getSkills(
+    public async getExperienceSkills(
         @Arg('experienceId', () => Int) experienceId: number
     ): Promise<Skill[]> {
         const experience = await this.experienceRepository.findOne({
@@ -117,6 +117,6 @@ export class ExperienceResolver {
             throw new Error('Invalid experience ID');
         }
 
-        return await experience.skills;
+        return experience.skills;
     }
 }

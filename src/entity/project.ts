@@ -1,3 +1,6 @@
+/* eslint-disable  @typescript-eslint/explicit-member-accessibility */
+/* eslint-disable  @typescript-eslint/explicit-function-return-type  */
+
 import { Field, ID, ObjectType } from 'type-graphql';
 import {
     Column,
@@ -21,7 +24,7 @@ export class Project extends BaseEntity {
     image: string;
 
     @Field()
-    @Column()
+    @Column({ unique: true })
     title: string;
 
     @Field()

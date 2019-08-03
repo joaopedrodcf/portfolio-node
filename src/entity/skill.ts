@@ -1,3 +1,5 @@
+/* eslint-disable  @typescript-eslint/explicit-member-accessibility */
+/* eslint-disable  @typescript-eslint/explicit-function-return-type  */
 import { Field, ID, ObjectType } from 'type-graphql';
 import {
     Column,
@@ -17,7 +19,7 @@ export class Skill extends BaseEntity {
     id: number;
 
     @Field()
-    @Column()
+    @Column({ unique: true })
     name: string;
 
     @Field(() => [Experience], { nullable: true })
